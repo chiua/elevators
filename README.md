@@ -49,7 +49,8 @@ get one or many stops and then take action to hit those stops)
 
 
 
-**Older notes...this might not be applicable anymore...was taking notes in my nodepad and wanted to provided this so you can get an idea of my thought process.**
+##h4 Other notes
+**Below are Older notes...this might not be applicable anymore...was taking notes in my nodepad and wanted to provided this so you can get an idea of my thought process.**
 
   Elevator App
 Number of elevators and number of floors
