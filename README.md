@@ -3,7 +3,7 @@ elevator management system
 
 Primary design, I will focus on how I divide the resonsiblities of each object and if I have time implement some of the logic that is needed.  My priority is to think through the system and not actually creating the app since the time deadline is short.  Two types of entities here,...an "Elevator managment system" ( controller ) and "Elevators"
 
-elevator management system (they get requests, and dispatch those requested elevator stops to the correct elevator), the job of it is to pick the right elevator.  
+elevator management system (they get requests, and dispatch those requested elevator stops to the correct elevator), the job of it is to pick the right elevator. (their primary job is to handle scheduling appointments for the elevators).
 Also another part of this Elevator management system is to log/report on open/closing doors, what floor an elevator is at, etc
 - initialize this with number of elevators and number of floors
 - the characteristics it keeps
@@ -33,7 +33,24 @@ get one or many stops and then take action to hit those stops)
 
 
 
-  Older notes...this might not be applicable anymore...was taking notes in my nodepad and wanted to provided this so you can get an idea of my thought process.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##h4 Other notes
+**Below are Older notes...this might not be applicable anymore...was taking notes in my nodepad and wanted to provided this so you can get an idea of my thought process.**
 
   Elevator App
 Number of elevators and number of floors
