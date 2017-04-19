@@ -9,11 +9,11 @@ elevator management system
   - floors
   - collection of elevators
 -listens to elevator
-  - current floor event
-  - opening or closing of doors - related to clearing my stops
-- take in floor requests from customers (current floor)
--Sends actions
-  - adds request for stops/destinations to elevators
+  - current floor event - just logs the current floor.
+  - opening or closing of doors - related to clearing my stops - just logs the opening or closing and maybe a timestamp.
+- take in floor requests from customers (current floor) and has algo to
+  pick the right elevator for the customer. also denies for requests above or below it's bounds for floor (i.e. can't be -1 or above number of floors)
+- adds request for stops/destinations to elevators
 
 Elevator (try to make these as dumb as possible, just keep state)
   - keeps a track of the stops it needs to hit

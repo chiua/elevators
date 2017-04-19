@@ -9,8 +9,11 @@ var elevatorManagementSystem = {
   elevators : [],
   getElevatorRequest : function(currentFloor, desiredFloor){
     //algorithtm to pick the right elevator
-    
-    //add stop for that elevator
+    //1. is unoccupied on this floor
+    //2. is occupied passing this floor and going in the same direction
+    //3. pick the closes unoccupied elevator
 
+    //add stop for that elevator
+    //returns to the customer the elevator number that they picked
   },
 }
