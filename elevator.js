@@ -11,8 +11,9 @@ var elevator = {
   doorOpen : false
 }
 
-elevator.prototype.takeRequest = function(destinationFloor){
-  //add a scheduled stop to the array
+elevator.prototype.takeRequest = function(customerFloor, destinationFloor){
+  //add a scheduled stop to the array for pickup and delivery of customer
+  stops.push(customerFloor);
   stops.push(destinationFloor);
   //if elevator is not moving (is not Occupied) then start the floor movement
   if (!isOccupied){
@@ -29,6 +30,8 @@ elevator.prototype.takeRequest = function(destinationFloor){
 
 elevator.prototype.sendFloor = function(){
   //send floor to the management system for reporting
+  //call some static method in the elevator management system to report
+  //will need to build that part out later
 }
 
 elevator.prototype.sendOpenDoor = function(floor){
@@ -78,6 +81,7 @@ elevator.prototype.moveFloor = function(){
       //going down
       currentFloor --;
     }
+    mileage++; //adding the mileage on this elevator...this isn't used for when to call service, but might be needed later.
 
     //clear out the stop if the floor is in one of the stops...then open the door
     var isStop = stops.map(function(stop, index){
@@ -88,6 +92,7 @@ elevator.prototype.moveFloor = function(){
     });
 
     //if the current floor is a stop...clear the timeout (stop the moving elevator),..and then open and close the door..
+    //dont want some customers getting out in a moving elevator
     if (isStop.length){
       //clear out this stop, the customer is at the right place
       stops.splice(isStop[0], 1);
@@ -102,3 +107,5 @@ elevator.prototype.moveFloor = function(){
 
   }).bind(this), 1000); //using 1 second as travel time between floors
 }
+
+export default elevator;
