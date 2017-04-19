@@ -9,9 +9,6 @@ Also another part of this Elevator management system is to log/report on open/cl
 - the characteristics it keeps
   - floors
   - collection of elevators
--listens to elevator
-  - current floor event - just logs the current floor, keep it in the management system because it is a central place for reporting
-  - opening or closing of doors - related to clearing my stops - just logs the opening or closing and maybe a timestamp.
 - take in floor requests from customers (current floor) and has algo to
   pick the right elevator for the customer. also denies for requests above or below it's bounds for floor (i.e. can't be -1 or above number of floors)
 - adds request for stops/destinations to elevators
