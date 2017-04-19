@@ -71,7 +71,7 @@ elevator.prototype.sendTripEnded = function(){
 }
 
 elevator.prototype.moveFloor = function(){
-  //add a setTimeout to move between floors until all floors have been hit
+  //add a setTimeout to move between floors until all stops have been hit
   this.moving = window.setTimeout((function(){
     //we have already vetted that the stops are within the bounds of the floors in the building when we take in the request
     if (direction){
