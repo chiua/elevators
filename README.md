@@ -33,3 +33,95 @@ get one or many stops and then take action to hit those stops) when there are no
   - opening or closing doors
   - service needed
   - trip ended, unoccupied elevator
+
+
+  Other notes taken
+
+  Elevator App
+Number of elevators and number of floors
+
+
+Elevator
+- Report to the controller on what floor it is currently on, this should also add a count to itself.
+- After last stop…then this is unoccupied… report that to the controller, after the last stop..that is considered a trip
+- How many trips it has made..100 it will stop functioning until service.  If need service then report to the scheduler
+- Scheduler adds a stop to the list…
+- Goes to each floor, if it’s a stop then open’s it’s doors and closes door
+- Goes to next stop until last stop…and then reports to the controller it’s unoccupied
+-
+
+
+Elevator controller/scheduler
+- Keeps a track of elevators,
+    - unoccupied/occupied
+    - Destination - clear this when the occupied opens it’s door
+    - Current floor
+- Also negate requests that are dumb,..going below the ground floor or going above the building
+- Take a request for an elevator and chooses which elevator based on information, choosing the elevator it goes through this algorithm to figure out which elevator to choose.
+    - Is unoccupied elevator on requested floor
+    - if not, is any elevator moving?
+    - Is current elevator moving, passing by floor
+    - Which elevator is closest.that is moving
+    - If no elevator is moving then we choose the nearest unoccupied.
+    - Also direction of the elevator matters
+
+Controller
+- Is unoccupied on this floor? No //highest priority
+- is occupied passing this floor? And going in the same direction (people will get angry if they move the other direction)…. So the current floor of the elevator is less or equal to 1 and it’s going above or equal to the requested floor.  //second highest priority
+- none are occupied or passing the floor,..choose the nearest unoccupied one.
+
+
+Use cases
+4 Elevators
+10 floors
+
+Elevator A
+- Floor 3
+- Unoccupied/not moving
+- Close door
+
+Elevator B
+- Floor 1
+- Occupied/moving
+- Stops at 5
+- Moving up
+
+Elevator C
+-  Floor 6
+- Occupied/moving
+- Stops at 3
+- Moving down
+
+Elevator D
+- Floor 3
+- Occupied/moving
+- Stops at 6
+- Moving up
+
+Request
+- Current Floor 1
+- Departure floor 6
+- Pick which elevator to add a stop to
+    - None unoccupied on this floor
+    - Going up, elevator b and c
+    - Elevator B passing by or on this floor
+    - Add this stop for elevator B
+    -
+
+-Request
+- Current Floor 4
+- Departure Floor 2
+- Pick which elevator
+    - None unoccupied on this floor
+    - Going down, elevator C
+    - is being passed by, by elevator C
+    - add this stop to C for pickup
+
+Request
+- Current floor 8
+- Departure floor 1
+- Pick which elevator
+    - None unoccupied on this floor
+    - Going down elevator C
+    - Is being passed by? No
+    - Nearest unoccupied, elevator A.
