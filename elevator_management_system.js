@@ -14,6 +14,11 @@ var elevatorManagementSystem = {
     }
 
     //algorithtm to pick the right elevator
+    //for now will just iterate through the array of elevators to look for these conditions
+    //later on we can have more lists like elevators_in_service so I can remember instead of
+    //always checking
+    
+    //0. this needs to be a elevator in service.. check that first
     //1. is unoccupied on this floor
     //2. is occupied passing this floor and going in the same direction
     //3. pick the closes unoccupied elevator

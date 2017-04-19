@@ -6,8 +6,9 @@ var elevator = {
   maximumTrips : 100, //how many trips before needing service
   isOccupied : false,
   direction : 1, //1 is for going up, and 0 is for going down
-  serviceNeeded : false
-
+  serviceNeeded : false,
+  moving : null, //this is to hold current the moving timeout.
+  doorOpen : false
 }
 
 elevator.prototype.takeRequest = function(destinationFloor){
@@ -22,6 +23,7 @@ elevator.prototype.takeRequest = function(destinationFloor){
       this.direction = 0;
     }
     this.moveFloor();
+    this.isOccupied = true;
   }
 };
 
@@ -29,13 +31,25 @@ elevator.prototype.sendFloor = function(){
   //send floor to the management system for reporting
 }
 
-elevator.prototype.sendOpenDoor = function(){
+elevator.prototype.sendOpenDoor = function(floor){
   //send open door to the management system for reporting
+  this.doorOpen = true;
+  setTimeout((function(){
+      this.sendCloseDoor();
+  }).bind(this), 2000); //give the people enough time to get out...2 seconds
 }
 
 elevator.prototype.sendCloseDoor = function(){
   //send close door to the management system for reporting
-
+  //afterwards start the the elevator moving again once the doors are closed (and only if there is more stops...otherwise
+  //call the sendTrip ended)
+  this.doorOpen = false;
+  if (stops.length){
+    this.moveFloor();
+  }else {
+    //if no more stops...the trip has ended
+    this.sendTripEnded();
+  }
 }
 
 elevator.prototype.sendServiceRequest = function(){
@@ -46,6 +60,7 @@ elevator.prototype.sendServiceRequest = function(){
 elevator.prototype.sendTripEnded = function(){
   //when the trip has ended this means that the elevator is now unoccupied
   //clear the timeout to move floors...it's ended...
+  this.isOccupied = false;
   trips++;
   if (trips >= maximumTrips){
     this.sendServiceRequest();
@@ -54,7 +69,7 @@ elevator.prototype.sendTripEnded = function(){
 
 elevator.prototype.moveFloor = function(){
   //add a setTimeout to move between floors until all floors have been hit
-  window.setTimeout((function(){
+  this.moving = window.setTimeout((function(){
     //we have already vetted that the stops are within the bounds of the floors in the building when we take in the request
     if (direction){
       //going up
@@ -65,16 +80,25 @@ elevator.prototype.moveFloor = function(){
     }
 
     //clear out the stop if the floor is in one of the stops...then open the door
-    var isStop = stops.map(function(stop){
-      return stop === currentFloor;
+    var isStop = stops.map(function(stop, index){
+      if (stop === currentFloor){
+        //gives me the index so i know what to remove
+        return index;
+      }
     });
 
-    //if it's a stop...clear the timeout (stop the moving elevator),..and then open and close the door..
-    //afterwards start the the elevator moving again once the doors are closed (and only if there is more stops...otherwise
-   //call the sendTrip ended)
+    //if the current floor is a stop...clear the timeout (stop the moving elevator),..and then open and close the door..
+    if (isStop.length){
+      //clear out this stop, the customer is at the right place
+      stops.splice(isStop[0], 1);
+      //stop the moving elevator!!
+      clearTimeout(this.moving);
+      //and open the doors to let the passengers out
+      this.sendOpenDoor(currentFloor);
+    }
+
 
     this.sendFloor(currentFloor);
-    //add or decreent the currentFloor
 
   }).bind(this), 1000); //using 1 second as travel time between floors
 }
